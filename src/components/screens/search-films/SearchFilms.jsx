@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDebounce } from '../../../hooks/useDebounce';
-import MovieService from '../../../services/movies/movies.service';
+import MovieService from '../../../services/films/films.service';
 import { AlertBanner } from '../../ui/alert-banner/AlertBanner';
 import { FilmCard } from '../../ui/film-card/FilmCard';
 import { PaginationPages } from '../../ui/pagination-pages/PaginationPages';
