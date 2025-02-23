@@ -1,7 +1,7 @@
 import { Offline, Online } from 'react-detect-offline';
-import { RatedFilms } from '../../components/screens/rated-films/RatedFilms';
-import { SearchFilms } from '../../components/screens/search-films/SearchFilms';
-import { AlertBanner } from '../../components/ui/alert-banner/AlertBanner';
+import { RatedFilms } from '../../screens/rated-films/RatedFilms';
+import { SearchFilms } from '../../screens/search-films/SearchFilms';
+import { AlertBanner } from '../../ui/alert-banner/AlertBanner';
 import styles from './Main.module.css';
 
 export const Main = props => {
