@@ -1,0 +1,11 @@
+.star {
+	font-family: 'Inter';
+	height: 46px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+
+	@media (min-width: 1024px) {
+		font-size: 16.5px;
+	}
+}
