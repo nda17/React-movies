@@ -1,6 +1,5 @@
 import { Typography } from 'antd';
-import { format } from 'date-fns';
-import { enGB } from 'date-fns/locale';
+import { formatDate } from '../../../utils/format-date';
 import styles from './ReleaseDate.module.css';
 
 export const ReleaseDate = props => {
@@ -9,11 +8,7 @@ export const ReleaseDate = props => {
 
 	return (
 		<Text className={styles.text} type="secondary">
-			{releaseDate
-				? format(new Date(releaseDate), 'MMMM dd, yyyy', {
-						locale: enGB
-					})
-				: 'No data'}
+			{releaseDate ? formatDate(releaseDate) : 'No data'}
 		</Text>
 	);
 };
