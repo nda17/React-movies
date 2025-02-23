@@ -1,0 +1,18 @@
+.text {
+	font-family: 'Inter';
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 22px;
+	overflow-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.active {
+	-webkit-line-clamp: inherit;
+}
