@@ -5,14 +5,14 @@ import styles from './Header.module.css';
 export const Header = props => {
 	const {
 		menuPage,
-		changePage = Function.prototype,
+		setMenuPage = Function.prototype,
 		query,
 		setQuery = Function.prototype
 	} = props;
 
 	return (
 		<header className={styles.header}>
-			<StaticMenu onChange={changePage} />
+			<StaticMenu setMenuPage={setMenuPage} />
 			{menuPage === 1 && <SearchForm query={query} setQuery={setQuery} />}
 		</header>
 	);
