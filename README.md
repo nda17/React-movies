@@ -11,7 +11,7 @@
 
 ## Deployed:
 
-[Watch here](https://react-movies-omega-coral.vercel.app/)
+[Watch here](https://react-movies-2gp0ycrqe-dmitry-nefedovs-projects.vercel.app/)
 
 ## Project setup:
 
