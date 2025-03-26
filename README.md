@@ -7,7 +7,6 @@
 - Ant Design
 - Date-fns
 - React-detect-offline
--
 
 ## Deployed:
 
