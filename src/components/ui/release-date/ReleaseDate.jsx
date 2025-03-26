@@ -2,9 +2,8 @@ import { Typography } from 'antd';
 import { formatDate } from '../../../utils/format-date';
 import styles from './ReleaseDate.module.css';
 
-export const ReleaseDate = props => {
+export const ReleaseDate = ({ releaseDate }) => {
 	const { Text } = Typography;
-	const { releaseDate } = props;
 
 	return (
 		<Text className={styles.text} type="secondary">

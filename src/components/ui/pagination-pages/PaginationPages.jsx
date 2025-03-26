@@ -2,13 +2,11 @@ import { Pagination } from 'antd';
 import { useEffect, useState } from 'react';
 import styles from './PaginationPages.module.css';
 
-export const PaginationPages = props => {
-	const {
-		contentPage,
-		setContentPage = Function.prototype,
-		totalPages
-	} = props;
-
+export const PaginationPages = ({
+	contentPage,
+	setContentPage = Function.prototype,
+	totalPages
+}) => {
 	const [page, setPage] = useState(contentPage);
 
 	const changePage = e => {

@@ -11,18 +11,16 @@ import { TagGenre } from '../tag-genre/TagGenre';
 import { TitleCard } from '../title-card/TitleCard';
 import styles from './FilmCard.module.css';
 
-export const FilmCard = props => {
-	const {
-		item,
-		id = item.id,
-		poster = item.poster_path,
-		title = item.title,
-		rating = item.vote_average,
-		releaseDate = item.release_date,
-		genresIds = item.genre_ids || item.genres,
-		description = item.overview
-	} = props;
-
+export const FilmCard = ({
+	id,
+	poster,
+	title,
+	rating,
+	userStar,
+	releaseDate,
+	genresIds,
+	description
+}) => {
 	const { genres } = useContext(GenresContext);
 
 	const filmGenres = genresSlice(genresIds);
@@ -76,7 +74,7 @@ export const FilmCard = props => {
 				</div>
 				<div>
 					<Description text={description || 'No description'} />
-					<StarRating id={id} />
+					<StarRating id={id} userStar={userStar} />
 				</div>
 			</div>
 		</div>

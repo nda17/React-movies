@@ -1,67 +1,55 @@
-import { useEffect, useState } from 'react';
-import MovieService from '../../../services/films/films.service';
 import { AlertBanner } from '../../ui/alert-banner/AlertBanner';
 import { FilmCard } from '../../ui/film-card/FilmCard';
+import { PaginationPages } from '../../ui/pagination-pages/PaginationPages';
 import { Preloader } from '../../ui/preloader/Preloader';
 import styles from './RatedFilms.module.css';
 
-export const RatedFilms = () => {
+export const RatedFilms = ({
+	loading,
+	ratedFilms,
+	userRate,
+	contentPageRatedFilms,
+	setContentPageRatedFilms = Function.prototype
+}) => {
 	const message = 'Nothing found!';
 	const type = 'warning';
-
-	const [userRated, setUserRated] = useState([]);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		const requestFilmById = async id => {
-			try {
-				const response = await MovieService.getFilmById(id);
-				return response;
-			} catch (err) {
-				console.error('Get data error:', err);
-				setLoading(false);
-			}
-		};
-
-		const currentStorage = JSON.parse(localStorage.getItem('rating'));
-
-		if (currentStorage?.length) {
-			const queryRatedPromises = currentStorage.map(item => {
-				return requestFilmById(item.id);
-			});
-
-			Promise.all(queryRatedPromises)
-				.then(results => {
-					const queryRated = results;
-					setUserRated(queryRated);
-					setLoading(false);
-				})
-				.catch(err => {
-					console.error('Error fetching all data:', err);
-				});
-		} else {
-			setLoading(false);
-		}
-	}, []);
 
 	return (
 		<>
 			{loading ? (
 				<Preloader />
 			) : (
-				<ul className={styles.wrapper}>
-					{userRated?.length ? (
-						userRated.map(item => {
-							return (
-								<li key={item.id} className={styles.card}>
-									<FilmCard item={item} />
-								</li>
-							);
-						})
-					) : (
-						<AlertBanner message={message} type={type} />
+				<>
+					<ul className={styles.wrapper}>
+						{ratedFilms?.results?.length ? (
+							ratedFilms.results.map(film => {
+								return (
+									<li key={film.id} className={styles.card}>
+										<FilmCard
+											id={film.id}
+											poster={film.poster_path}
+											title={film.title}
+											rating={film.vote_average}
+											userStar={userRate[film.id]}
+											releaseDate={film.release_date}
+											genresIds={film.genre_ids || film.genres}
+											description={film.overview}
+										/>
+									</li>
+								);
+							})
+						) : (
+							<AlertBanner message={message} type={type} />
+						)}
+					</ul>
+					{ratedFilms.total_pages > 1 && (
+						<PaginationPages
+							contentPage={contentPageRatedFilms}
+							setContentPage={setContentPageRatedFilms}
+							totalPages={ratedFilms.total_pages}
+						/>
 					)}
-				</ul>
+				</>
 			)}
 		</>
 	);

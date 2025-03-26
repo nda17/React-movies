@@ -1,30 +1,32 @@
 import { Rate } from 'antd';
-import { useEffect, useState } from 'react';
-import { getLocalStorage } from '../../../utils/get-local-storage';
-import { setLocalStorage } from '../../../utils/set-local-storage';
+import { useContext, useEffect, useState } from 'react';
+import { SessionIdContext } from '../../../App';
+import MovieService from '../../../services/films/films.service';
 import styles from './StarRating.module.css';
 
-export const StarRating = props => {
-	const { id } = props;
-
+export const StarRating = ({ id, userStar }) => {
+	const { sessionId } = useContext(SessionIdContext);
 	const [rating, setRating] = useState(0);
 
-	const handleRatingChange = (id, stars) => {
-		const currentData = { id: id, stars: stars };
+	const handleRatingChange = async (id, value) => {
+		if (value === userStar || value === 0) {
+			return;
+		}
 
-		setLocalStorage('rating', currentData);
-		setRating(currentData[0]?.stars);
+		setRating(value);
+
+		try {
+			await MovieService.addRateFilm(id, value, sessionId);
+
+			setRating(value);
+		} catch (err) {
+			console.error('Added rate error:', err);
+		}
 	};
 
 	useEffect(() => {
-		const currentStorage = getLocalStorage('rating');
-
-		if (currentStorage) {
-			const stars = currentStorage.filter(item => item.id === id)[0]
-				?.stars;
-			setRating(stars);
-		}
-	}, [rating, id]);
+		userStar ? setRating(userStar) : setRating(0);
+	}, [userStar]);
 
 	return (
 		<Rate

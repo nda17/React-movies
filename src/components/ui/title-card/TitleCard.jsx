@@ -1,9 +1,8 @@
 import { Typography } from 'antd';
 import styles from './TitleCard.module.css';
 
-export const TitleCard = props => {
+export const TitleCard = ({ title }) => {
 	const { Title } = Typography;
-	const { title } = props;
 
 	return (
 		<Title className={styles.title} level={4}>

@@ -2,10 +2,8 @@ import { Typography } from 'antd';
 import { useState } from 'react';
 import styles from './Description.module.css';
 
-export const Description = props => {
+export const Description = ({ text }) => {
 	const { Text } = Typography;
-	const { text } = props;
-
 	const [isActive, setIsActive] = useState(false);
 
 	const handleVisibleText = () => {

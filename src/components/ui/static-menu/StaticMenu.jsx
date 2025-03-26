@@ -1,16 +1,14 @@
 import { Tabs } from 'antd';
 import { staticMenu } from './data/menu.data';
 
-export const StaticMenu = props => {
-	const { setMenuPage = Function.prototype } = props;
-
+export const StaticMenu = ({ setPage }) => {
 	const handleChangePage = key => {
-		setMenuPage(key);
+		setPage(key);
 	};
 
 	return (
 		<Tabs
-			defaultActiveKey="1"
+			defaultActiveKey="page"
 			items={staticMenu}
 			onChange={handleChangePage}
 		/>

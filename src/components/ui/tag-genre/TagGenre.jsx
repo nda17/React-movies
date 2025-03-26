@@ -1,8 +1,6 @@
 import { Tag } from 'antd';
 import styles from './TagGenre.module.css';
 
-export const TagGenre = props => {
-	const { genre } = props;
-
+export const TagGenre = ({ genre }) => {
 	return <Tag className={styles.tag}>{genre}</Tag>;
 };

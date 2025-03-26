@@ -1,8 +1,7 @@
 import { Input } from 'antd';
 import { useEffect, useState } from 'react';
 
-export const SearchForm = props => {
-	const { query, setQuery = Function.prototype } = props;
+export const SearchForm = ({ query, setQuery = Function.prototype }) => {
 	const [value, setValue] = useState(query);
 
 	const handleChange = e => {

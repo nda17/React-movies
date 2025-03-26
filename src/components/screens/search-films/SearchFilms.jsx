@@ -1,43 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useDebounce } from '../../../hooks/useDebounce';
-import MovieService from '../../../services/films/films.service';
 import { AlertBanner } from '../../ui/alert-banner/AlertBanner';
 import { FilmCard } from '../../ui/film-card/FilmCard';
 import { PaginationPages } from '../../ui/pagination-pages/PaginationPages';
 import { Preloader } from '../../ui/preloader/Preloader';
 import styles from './SearchFilms.module.css';
 
-export const SearchFilms = props => {
-	const { query } = props;
-
+export const SearchFilms = ({
+	loading,
+	searchFilms,
+	userRate,
+	contentPageSearchFilms,
+	setContentPageSearchFilms = Function.prototype
+}) => {
 	const message = 'Nothing found!';
 	const type = 'warning';
-
-	const [loading, setLoading] = useState(true);
-	const [contentPage, setContentPage] = useState(1);
-	const [searchFilms, setSearchFilms] = useState({});
-	const debouncedQuery = useDebounce(query, 700);
-
-	useEffect(() => {
-		const requestSearchFilms = async () => {
-			setLoading(true);
-
-			try {
-				const response = await MovieService.getSearchFilms(
-					debouncedQuery,
-					contentPage
-				);
-
-				setSearchFilms(response);
-				setLoading(false);
-			} catch (err) {
-				console.error('Get data error:', err);
-				setLoading(false);
-			}
-		};
-
-		requestSearchFilms();
-	}, [debouncedQuery, contentPage]);
 
 	return (
 		<>
@@ -46,11 +21,21 @@ export const SearchFilms = props => {
 			) : (
 				<>
 					<ul className={styles.wrapper}>
-						{searchFilms?.results ? (
-							searchFilms.results.map(item => {
+						{searchFilms?.results?.length ? (
+							searchFilms.results.map(film => {
 								return (
-									<li key={item.id} className={styles.card}>
-										<FilmCard item={item} />
+									<li key={film.id} className={styles.card}>
+										<FilmCard
+											id={film.id}
+											poster={film.poster_path}
+											title={film.title}
+											rating={film.vote_average}
+											userRate
+											userStar={userRate[film.id]}
+											releaseDate={film.release_date}
+											genresIds={film.genre_ids || film.genres}
+											description={film.overview}
+										/>
 									</li>
 								);
 							})
@@ -58,10 +43,10 @@ export const SearchFilms = props => {
 							<AlertBanner message={message} type={type} />
 						)}
 					</ul>
-					{searchFilms.total_pages > 20 && (
+					{searchFilms.total_pages > 1 && (
 						<PaginationPages
-							contentPage={contentPage}
-							setContentPage={setContentPage}
+							contentPage={contentPageSearchFilms}
+							setContentPage={setContentPageSearchFilms}
 							totalPages={searchFilms.total_pages}
 						/>
 					)}
